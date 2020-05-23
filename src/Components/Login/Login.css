@@ -1,0 +1,14 @@
+.login-form{
+    width: 100%;
+    max-width: 330px;
+}
+#formBasicEmail{
+    width: 100%;
+    max-width: 330px;
+}
+.lnKForgetPassword{
+    float: right;
+}
+.lnkBackToLogin{
+    float: right;
+}
