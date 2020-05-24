@@ -73,8 +73,6 @@ class Login extends Component{
             else{
               localStorage.setItem('token', result.token);
                 this.props.history.push("/ContactIndex");
-                
-              // this.setState({OpenSanckbar:true,SnackbarMsg:"Incorrect Username and Password",SnackbarSeverity:"error"});
             }
           },
           (error)=>{

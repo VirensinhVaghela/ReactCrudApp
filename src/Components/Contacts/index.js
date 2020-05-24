@@ -4,6 +4,7 @@ import AddOrEditContacts from './AddOrEditContacts'
 import MaterialTable from 'material-table'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
+import axios from 'axios'
 
 
 export default class ContactIndex extends Component {
@@ -50,6 +51,7 @@ export default class ContactIndex extends Component {
     }
 
     RefreshContactList(){
+      debugger;
         this.GetContactList()
     }
 
@@ -68,34 +70,32 @@ export default class ContactIndex extends Component {
 
     HandleDelete(Id){
       debugger;
-      const deleteUrl = 'https://localhost:44377/api/Employee/DeleteEmployee/'+Id+'' ;
-        fetch(deleteUrl,{
-          method:'DELETE',
-            headers:{
-              'Accept':'application/json',
-              'Content-Type':'application/json',
-              'Authorization': 'Bearer '+localStorage.getItem("token")
-            }
-        })
-        .then(response => response.json())
-        .then((result)=>{
-          debugger;
-            if(result !== null && result !== undefined){
-                if(result.status === 400 || result.status === 404){
-                  this.setState({OpenSanckbar:true,SnackbarMsg:"An error occurred while deleting the file",SnackbarSeverity:"error"})
-                  this.RefreshContactList();
-                }
-                else{
-                    this.setState({OpenSanckbar:true,SnackbarMsg:"Data Deleted Succesfully",SnackbarSeverity:"success"})
-                    this.RefreshContactList();
-                }
-            }
-        },
-        (error)=>{
-          debugger;
-            this.setState({OpenSanckbar:true,SnackbarMsg:"An error occurred while deleting the file",SnackbarSeverity:"error"}); 
+      const headers = {
+        'Accept':'application/json',
+        'Content-Type':'application/json',
+        'Authorization': 'Bearer '+localStorage.getItem("token")
+      }
+
+      axios.delete('https://localhost:44377/api/Employee/DeleteEmployee/'+Id+'',
+      {
+        headers:headers
+      })
+      .then((result)=>{
+        if(result !== null && result !== undefined){
+          if(result.status === 200){
+            this.setState({OpenSanckbar:true,SnackbarMsg:"Data Deleted Succesfully",SnackbarSeverity:"success"})
             this.RefreshContactList();
-          })
+          }
+          else{
+              
+            this.setState({OpenSanckbar:true,SnackbarMsg:"An error occurred while deleting the record",SnackbarSeverity:"error"})
+            this.RefreshContactList();
+          }
+        }
+      })
+      .catch((err)=>{
+        console.log("Response error :",err);
+      })
     }
 
     SnackbarClose = (event) =>{
@@ -105,11 +105,12 @@ export default class ContactIndex extends Component {
     render(){
         
         let ShowModalClose = () => this.setState({ShowModal:false});
+        let OnSave = () => this.RefreshContactList();
         return(
             <div>
                 <AddOrEditContacts 
                 show={this.state.ShowModal} 
-                onHide={ShowModalClose} ID={this.state.GetEmployeeID} />
+                onHide={ShowModalClose} onsave={OnSave}  ID={this.state.GetEmployeeID} />
 
             <Snackbar 
               style={{width:"500px"}} 
