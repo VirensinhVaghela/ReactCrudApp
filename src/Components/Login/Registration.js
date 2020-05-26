@@ -27,7 +27,6 @@ class Registration extends Component{
     }
 
     HandleRegistartion(event){
-        debugger;
         event.preventDefault();
 
         const PasswordPattern = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");

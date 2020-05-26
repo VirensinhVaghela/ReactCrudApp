@@ -1,0 +1,22 @@
+
+.MuiMenu-list {
+    outline: 0;
+    display: grid;
+}
+.tblMaterialTable{
+    position: relative;
+    bottom: 150px;
+}
+.btnshowColumn{
+    position: relative;
+    bottom: 32px;
+    left: 180px;
+    z-index: 1;
+    width: 200px;
+}
+.btnHideColumn{
+    position: relative;
+    bottom: 28px;
+    left: 200px;
+    z-index: 1;
+}

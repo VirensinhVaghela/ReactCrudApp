@@ -15,8 +15,6 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ContactsIcon from '@material-ui/icons/Contacts';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -81,7 +79,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function OncClickLogOut(){
-    debugger;
     localStorage.setItem('token', null);
     window.location.href="/Login";
 }
@@ -139,21 +136,7 @@ export default function NavigationBar() {
         </div>
         
         <Divider />
-        {/* <List>
-          {['DashBoard', 'Contacts', 'Log Out'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-              {index === 0 ? <DashboardIcon onClick={event => window.location.href="/DashBoard"}/> 
-                : index === 1 ? <ContactsIcon onClick={event => window.location.href="/ContactIndex"} />
-                : <ExitToAppIcon onClick={event => window.location.href="/ContactIndex"} /> }
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        
-        <Divider /> */}
-        
+
         <List>
             <ListItem button>
               <ListItemIcon> <DashboardIcon onClick={event => window.location.href="/DashBoard"} /></ListItemIcon>

@@ -36,7 +36,7 @@ class ForgetPassword extends Component{
         })
         .then(resp=>resp.json())
         .then((result)=>
-        {debugger;
+        {
             if(result !== null && result !== undefined)
             {
                 if(result.status === 400 && result.message !== "" && result.message !== undefined)
@@ -73,13 +73,6 @@ class ForgetPassword extends Component{
                             <Form.Group style={{textAlign:"left"}}>
                                 <Form.Text>Forget Password?</Form.Text>
                             </Form.Group>
-                            {/* <Form.Group>
-                            <Form.Control 
-                              type="text"
-                              name="UserName"
-                              required
-                              placeholder="UserName"/>
-                          </Form.Group> */}
                           <Form.Group>
                             <Form.Control
                               type="email"

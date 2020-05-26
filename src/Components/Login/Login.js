@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import './Login.css'
 import {Form  , Row , Col,Button }  from 'react-bootstrap';
-import { Link ,Redirect  } from 'react-router-dom';
+import { Link  } from 'react-router-dom';
 import  Snackbar  from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert'
-import {AppBar, Toolbar }from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios'
 
 
 class Login extends Component{
@@ -27,7 +26,6 @@ class Login extends Component{
     }
 
     handleSubmit(event){
-      debugger;
       event.preventDefault();
       if(event.target.UserName.value === "" && event.target.Password.value === "")
       {
@@ -51,34 +49,40 @@ class Login extends Component{
         })
       }
       else{
-          fetch('https://localhost:44377/api/ApplicationUser/Login',{
-            method:'POST',
-            headers:{
-              'Accept':'application/json',
-              'Content-Type':'application/json'
-            },
-            body:JSON.stringify({
+        const headers={
+          'Accept':'application/json',
+          'Content-Type':'application/json'
+        }
+
+        const data = JSON.stringify({
               UserName:event.target.UserName.value,
               Password:event.target.Password.value
-            })
-          })
-          .then(resp=>resp.json())
-          .then((result)=>
-          {
-            debugger
-            if(result.status === 401)
-            {
-              this.setState({OpenSanckbar:true,SnackbarMsg:"Incorrect Username and Password",SnackbarSeverity:"error"});
-            }
-            else{
-              localStorage.setItem('token', result.token);
+        })
+
+        axios.post('https://localhost:44377/api/ApplicationUser/Login',data,{
+          headers:headers
+        })
+        .then((result)=>{
+            if(result !== null && result !== undefined){
+
+              if(result.status === 200){
+                localStorage.setItem('token', result.data.token);
+                console.log("token",result.data.token)
                 this.props.history.push("/ContactIndex");
+              }
+              else{
+                this.setState({OpenSanckbar:true,SnackbarMsg:"Incorrect Username and Password",SnackbarSeverity:"error"});
+              }
             }
-          },
-          (error)=>{
-            this.setState({OpenSanckbar:true,SnackbarMsg:"There is some error in user login",SnackbarSeverity:"error"}); 
+        })
+        .catch((error)=>{
+          if(error.response !== undefined &&  error.response.status !== undefined &&  error.response.status === 400){
+            this.setState({OpenSanckbar:true,SnackbarMsg:"Incorrect Username and Password",SnackbarSeverity:"error"});
           }
-          )
+          else{
+            this.setState({OpenSanckbar:true,SnackbarMsg:"An error occured while sending the request",SnackbarSeverity:"error"});
+          }
+        })
         }
       }
 
