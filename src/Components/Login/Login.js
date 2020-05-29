@@ -80,7 +80,7 @@ class Login extends Component{
             this.setState({OpenSanckbar:true,SnackbarMsg:"Incorrect Username and Password",SnackbarSeverity:"error"});
           }
           else{
-            this.setState({OpenSanckbar:true,SnackbarMsg:"An error occured while sending the request",SnackbarSeverity:"error"});
+            this.setState({OpenSanckbar:true,SnackbarMsg:"An error occurred while sending the request",SnackbarSeverity:"error"});
           }
         })
         }
